@@ -5,6 +5,11 @@ import * as React from "react"
 import { SearchForm } from "@/components/search-form"
 import { VersionSwitcher } from "@/components/version-switcher"
 import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible"
+import {
   Sidebar,
   SidebarContent,
   SidebarGroup,
@@ -34,67 +39,70 @@ import {
   Webhook,
   Activity,
   TerminalSquare,
-  UserCircle,
-  Building2,
-  Shield,
-  Blocks,
-  Layout,
-  Briefcase,
-  History,
+  Settings,
+  Wallet,
+  ChevronRightIcon
 } from "lucide-react"
 
 const data = {
-  versions: ["1.0.1", "1.1.0-alpha", "2.0.0-beta1"],
   navGroups: [
     {
-      title: "MAIN",
+      title: "OVERVIEW",
       items: [
-        { title: "Overview", url: "#", icon: LayoutDashboard, isActive: true },
-        { title: "Payments", url: "#", icon: CreditCard },
-        { title: "Customers", url: "#", icon: Users },
-        { title: "Products", url: "#", icon: Package },
-        { title: "Payment Links", url: "#", icon: Link2 },
-        { title: "Invoices", url: "#", icon: FileText },
-        { title: "Subscriptions", url: "#", icon: Repeat },
-        { title: "Refunds", url: "#", icon: Undo2 },
-        { title: "Payouts", url: "#", icon: Banknote },
-        { title: "Transactions", url: "#", icon: ArrowRightLeft },
-        { title: "Analytics", url: "#", icon: BarChart3 },
+        { title: "Overview", url: "/dashboard", icon: LayoutDashboard, isActive: true },
       ],
     },
     {
-      title: "MANAGEMENT",
+      title: "PAYMENTS",
       items: [
-        { title: "Team", url: "#", icon: Users2 },
-        { title: "Notifications", url: "#", icon: Bell },
+        { title: "Payments", url: "/dashboard/payments", icon: CreditCard },
+        { title: "Payment Links", url: "/dashboard/payment-links", icon: Link2 },
+        { title: "Refunds", url: "/dashboard/refunds", icon: Undo2 },
       ],
     },
     {
-      title: "DEVELOPER",
+      title: "CUSTOMERS",
       items: [
-        { title: "API Keys", url: "#", icon: Key },
-        { title: "Webhooks", url: "#", icon: Webhook },
-        { title: "Events", url: "#", icon: Activity },
-        { title: "API Logs", url: "#", icon: TerminalSquare },
+        { title: "Customers", url: "/dashboard/customers", icon: Users },
       ],
     },
     {
-      title: "SETTINGS",
+      title: "PRODUCTS & BILLING",
       items: [
-        { title: "Profile", url: "#", icon: UserCircle },
-        { title: "Business", url: "#", icon: Building2 },
-        { title: "Security", url: "#", icon: Shield },
-        { title: "Billing", url: "#", icon: CreditCard },
-        { title: "Integrations", url: "#", icon: Blocks },
+        { title: "Products", url: "/dashboard/products", icon: Package },
+        { title: "Invoices", url: "/dashboard/invoices", icon: FileText },
+        { title: "Subscriptions", url: "/dashboard/subscriptions", icon: Repeat },
       ],
     },
     {
-      title: "ADMIN",
+      title: "MONEY",
       items: [
-        { title: "Admin Dashboard", url: "#", icon: Layout },
-        { title: "Users", url: "#", icon: Users },
-        { title: "Businesses", url: "#", icon: Briefcase },
-        { title: "Audit Logs", url: "#", icon: History },
+        { title: "Balance", url: "/dashboard/balance", icon: Wallet },
+        { title: "Payouts", url: "/dashboard/payouts", icon: Banknote },
+        { title: "Transactions", url: "/dashboard/transactions", icon: ArrowRightLeft },
+      ],
+    },
+    {
+      title: "INSIGHTS",
+      items: [
+        { title: "Analytics", url: "/dashboard/analytics", icon: BarChart3 },
+      ],
+    },
+    {
+      title: "DEVELOPERS",
+      items: [
+        { title: "API Keys", url: "/dashboard/api-keys", icon: Key },
+        { title: "Webhooks", url: "/dashboard/webhooks", icon: Webhook },
+        { title: "Events", url: "/dashboard/events", icon: Activity },
+        { title: "API Logs", url: "/dashboard/api-logs", icon: TerminalSquare },
+      ],
+    },
+    {
+      title: "ACCOUNT",
+      items: [
+        { title: "Team", url: "/dashboard/team", icon: Users2 },
+        { title: "Notifications", url: "/dashboard/notifications", icon: Bell },
+        { title: "Settings", url: "/dashboard/settings", icon: Settings },
       ],
     },
   ],
@@ -105,7 +113,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     <Sidebar {...props}>
       <SidebarHeader>
         <div className="flex items-center px-4 py-2 mt-2">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground font-bold text-lg">
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-600 text-white font-bold text-lg">
             P
           </div>
           <span className="ml-3 font-semibold text-lg tracking-tight">PayFlow</span>
@@ -113,28 +121,70 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <SearchForm />
       </SidebarHeader>
       <SidebarContent className="gap-0">
-        {data.navGroups.map((group) => (
-          <SidebarGroup key={group.title}>
-            <SidebarGroupLabel className="text-xs font-semibold text-muted-foreground tracking-wider uppercase mb-1">
-              {group.title}
-            </SidebarGroupLabel>
-            <SidebarGroupContent>
-              <SidebarMenu>
-                {group.items.map((item) => (
-                  <SidebarMenuItem key={item.title}>
-                    <SidebarMenuButton
-                      isActive={item.isActive}
-                      render={<a href={item.url} />}
-                    >
-                      <item.icon className="h-4 w-4 opacity-70" />
-                      <span>{item.title}</span>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                ))}
-              </SidebarMenu>
-            </SidebarGroupContent>
-          </SidebarGroup>
-        ))}
+        {data.navGroups.map((group) => {
+          const isCollapsible = group.items.length > 1;
+
+          if (!isCollapsible) {
+            return (
+              <SidebarGroup key={group.title}>
+                <SidebarGroupLabel className="text-xs font-semibold text-muted-foreground tracking-wider uppercase mb-1">
+                  {group.title}
+                </SidebarGroupLabel>
+                <SidebarGroupContent>
+                  <SidebarMenu>
+                    {group.items.map((item) => (
+                      <SidebarMenuItem key={item.title}>
+                        <SidebarMenuButton
+                          isActive={item.isActive}
+                          render={<a href={item.url} />}
+                        >
+                          <item.icon className="h-4 w-4 opacity-70 text-blue-600" />
+                          <span>{item.title}</span>
+                        </SidebarMenuButton>
+                      </SidebarMenuItem>
+                    ))}
+                  </SidebarMenu>
+                </SidebarGroupContent>
+              </SidebarGroup>
+            )
+          }
+
+          return (
+            <Collapsible
+              key={group.title}
+              title={group.title}
+              defaultOpen
+              className="group/collapsible"
+            >
+              <SidebarGroup>
+                <SidebarGroupLabel
+                  className="group/label text-xs font-semibold text-muted-foreground tracking-wider uppercase mb-1 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground cursor-pointer"
+                  render={<CollapsibleTrigger />}
+                >
+                  {group.title}{" "}
+                  <ChevronRightIcon className="ml-auto transition-transform group-data-open/collapsible:rotate-90 h-4 w-4" />
+                </SidebarGroupLabel>
+                <CollapsibleContent>
+                  <SidebarGroupContent>
+                    <SidebarMenu>
+                      {group.items.map((item) => (
+                        <SidebarMenuItem key={item.title}>
+                          <SidebarMenuButton
+                            isActive={item.isActive}
+                            render={<a href={item.url} />}
+                          >
+                            <item.icon className="h-4 w-4 opacity-70 text-blue-600" />
+                            <span>{item.title}</span>
+                          </SidebarMenuButton>
+                        </SidebarMenuItem>
+                      ))}
+                    </SidebarMenu>
+                  </SidebarGroupContent>
+                </CollapsibleContent>
+              </SidebarGroup>
+            </Collapsible>
+          )
+        })}
       </SidebarContent>
       <SidebarRail />
     </Sidebar>
