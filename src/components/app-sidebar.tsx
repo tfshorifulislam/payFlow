@@ -212,10 +212,13 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <SidebarMenu>
           <SidebarMenuItem>
             <DropdownMenu>
-              <SidebarMenuButton
-                size="lg"
-                className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-xl p-2 h-auto transition-colors"
-                render={<DropdownMenuTrigger />}
+              <DropdownMenuTrigger
+                render={
+                  <SidebarMenuButton
+                    size="lg"
+                    className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-xl p-2 h-auto transition-colors"
+                  />
+                }
               >
                 <div className="flex aspect-square size-9 items-center justify-center rounded-lg bg-gradient-primary text-white shadow-sm">
                   <span className="font-bold text-xs">AC</span>
@@ -225,7 +228,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                   <span className="truncate text-xs text-muted-foreground">admin@acme.com</span>
                 </div>
                 <ChevronsUpDown className="ml-auto size-4 text-muted-foreground" />
-              </SidebarMenuButton>
+              </DropdownMenuTrigger>
               <DropdownMenuContent
                 className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-xl border-border"
                 side="bottom"
