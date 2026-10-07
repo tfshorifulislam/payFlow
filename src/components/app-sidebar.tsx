@@ -5,11 +5,6 @@ import * as React from "react"
 import { SearchForm } from "@/components/search-form"
 import { VersionSwitcher } from "@/components/version-switcher"
 import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible"
-import {
   Sidebar,
   SidebarContent,
   SidebarGroup,
@@ -21,194 +16,124 @@ import {
   SidebarMenuItem,
   SidebarRail,
 } from "@/components/ui/sidebar"
-import { ChevronRightIcon } from "lucide-react"
+import {
+  LayoutDashboard,
+  CreditCard,
+  Users,
+  Package,
+  Link2,
+  FileText,
+  Repeat,
+  Undo2,
+  Banknote,
+  ArrowRightLeft,
+  BarChart3,
+  Users2,
+  Bell,
+  Key,
+  Webhook,
+  Activity,
+  TerminalSquare,
+  UserCircle,
+  Building2,
+  Shield,
+  Blocks,
+  Layout,
+  Briefcase,
+  History,
+} from "lucide-react"
 
-// This is sample data.
 const data = {
   versions: ["1.0.1", "1.1.0-alpha", "2.0.0-beta1"],
-  navMain: [
+  navGroups: [
     {
-      title: "Getting Started",
-      url: "#",
+      title: "MAIN",
       items: [
-        {
-          title: "Installation",
-          url: "#",
-        },
-        {
-          title: "Project Structure",
-          url: "#",
-        },
+        { title: "Overview", url: "#", icon: LayoutDashboard, isActive: true },
+        { title: "Payments", url: "#", icon: CreditCard },
+        { title: "Customers", url: "#", icon: Users },
+        { title: "Products", url: "#", icon: Package },
+        { title: "Payment Links", url: "#", icon: Link2 },
+        { title: "Invoices", url: "#", icon: FileText },
+        { title: "Subscriptions", url: "#", icon: Repeat },
+        { title: "Refunds", url: "#", icon: Undo2 },
+        { title: "Payouts", url: "#", icon: Banknote },
+        { title: "Transactions", url: "#", icon: ArrowRightLeft },
+        { title: "Analytics", url: "#", icon: BarChart3 },
       ],
     },
     {
-      title: "Build Your Application",
-      url: "#",
+      title: "MANAGEMENT",
       items: [
-        {
-          title: "Routing",
-          url: "#",
-        },
-        {
-          title: "Data Fetching",
-          url: "#",
-          isActive: true,
-        },
-        {
-          title: "Rendering",
-          url: "#",
-        },
-        {
-          title: "Caching",
-          url: "#",
-        },
-        {
-          title: "Styling",
-          url: "#",
-        },
-        {
-          title: "Optimizing",
-          url: "#",
-        },
-        {
-          title: "Configuring",
-          url: "#",
-        },
-        {
-          title: "Testing",
-          url: "#",
-        },
-        {
-          title: "Authentication",
-          url: "#",
-        },
-        {
-          title: "Deploying",
-          url: "#",
-        },
-        {
-          title: "Upgrading",
-          url: "#",
-        },
-        {
-          title: "Examples",
-          url: "#",
-        },
+        { title: "Team", url: "#", icon: Users2 },
+        { title: "Notifications", url: "#", icon: Bell },
       ],
     },
     {
-      title: "API Reference",
-      url: "#",
+      title: "DEVELOPER",
       items: [
-        {
-          title: "Components",
-          url: "#",
-        },
-        {
-          title: "File Conventions",
-          url: "#",
-        },
-        {
-          title: "Functions",
-          url: "#",
-        },
-        {
-          title: "next.config.js Options",
-          url: "#",
-        },
-        {
-          title: "CLI",
-          url: "#",
-        },
-        {
-          title: "Edge Runtime",
-          url: "#",
-        },
+        { title: "API Keys", url: "#", icon: Key },
+        { title: "Webhooks", url: "#", icon: Webhook },
+        { title: "Events", url: "#", icon: Activity },
+        { title: "API Logs", url: "#", icon: TerminalSquare },
       ],
     },
     {
-      title: "Architecture",
-      url: "#",
+      title: "SETTINGS",
       items: [
-        {
-          title: "Accessibility",
-          url: "#",
-        },
-        {
-          title: "Fast Refresh",
-          url: "#",
-        },
-        {
-          title: "Next.js Compiler",
-          url: "#",
-        },
-        {
-          title: "Supported Browsers",
-          url: "#",
-        },
-        {
-          title: "Turbopack",
-          url: "#",
-        },
+        { title: "Profile", url: "#", icon: UserCircle },
+        { title: "Business", url: "#", icon: Building2 },
+        { title: "Security", url: "#", icon: Shield },
+        { title: "Billing", url: "#", icon: CreditCard },
+        { title: "Integrations", url: "#", icon: Blocks },
       ],
     },
     {
-      title: "Community",
-      url: "#",
+      title: "ADMIN",
       items: [
-        {
-          title: "Contribution Guide",
-          url: "#",
-        },
+        { title: "Admin Dashboard", url: "#", icon: Layout },
+        { title: "Users", url: "#", icon: Users },
+        { title: "Businesses", url: "#", icon: Briefcase },
+        { title: "Audit Logs", url: "#", icon: History },
       ],
     },
   ],
 }
+
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar {...props}>
       <SidebarHeader>
-        <VersionSwitcher
-          versions={data.versions}
-          defaultVersion={data.versions[0]}
-        />
+        <div className="flex items-center px-4 py-2 mt-2">
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground font-bold text-lg">
+            P
+          </div>
+          <span className="ml-3 font-semibold text-lg tracking-tight">PayFlow</span>
+        </div>
         <SearchForm />
       </SidebarHeader>
       <SidebarContent className="gap-0">
-        {/* We create a collapsible SidebarGroup for each parent. */}
-        {data.navMain.map((item) => (
-          <Collapsible
-            key={item.title}
-            title={item.title}
-            defaultOpen
-            className="group/collapsible"
-          >
-            <SidebarGroup>
-              <SidebarGroupLabel
-                className="group/label text-sm text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
-                render={<CollapsibleTrigger />}
-              >
-                {item.title}{" "}
-                <ChevronRightIcon className="ml-auto transition-transform group-data-open/collapsible:rotate-90" />
-              </SidebarGroupLabel>
-              <CollapsibleContent>
-                <SidebarGroupContent>
-                  <SidebarMenu>
-                    {item.items.map((item) => (
-                      <SidebarMenuItem key={item.title}>
-                        <SidebarMenuButton
-                          isActive={item.isActive}
-                          render={<a href={item.url} />}
-                        >
-                          {item.title}
-                        </SidebarMenuButton>
-                      </SidebarMenuItem>
-                    ))}
-                  </SidebarMenu>
-                </SidebarGroupContent>
-              </CollapsibleContent>
-            </SidebarGroup>
-          </Collapsible>
+        {data.navGroups.map((group) => (
+          <SidebarGroup key={group.title}>
+            <SidebarGroupLabel className="text-xs font-semibold text-muted-foreground tracking-wider uppercase mb-1">
+              {group.title}
+            </SidebarGroupLabel>
+            <SidebarGroupContent>
+              <SidebarMenu>
+                {group.items.map((item) => (
+                  <SidebarMenuItem key={item.title}>
+                    <SidebarMenuButton
+                      isActive={item.isActive}
+                      render={<a href={item.url} />}
+                    >
+                      <item.icon className="h-4 w-4 opacity-70" />
+                      <span>{item.title}</span>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                ))}
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
         ))}
       </SidebarContent>
       <SidebarRail />
