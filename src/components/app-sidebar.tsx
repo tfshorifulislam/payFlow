@@ -1,12 +1,6 @@
-"use client"
+'use client';
 
-import * as React from "react"
-
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible"
+import * as React from 'react';
 import {
   Sidebar,
   SidebarContent,
@@ -19,196 +13,225 @@ import {
   SidebarMenuItem,
   SidebarRail,
   SidebarFooter,
-} from "@/components/ui/sidebar"
+} from '@/components/ui/sidebar';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+} from '@/components/ui/dropdown-menu';
 import {
   LayoutDashboard,
-  CreditCard,
   Users,
-  Package,
-  Link2,
-  FileText,
-  Repeat,
-  Undo2,
+  Building,
+  Clock,
+  CalendarOff,
   Banknote,
-  ArrowRightLeft,
-  BarChart3,
-  Users2,
-  Bell,
-  Key,
-  Webhook,
-  Activity,
-  TerminalSquare,
+  FolderKanban,
+  ListChecks,
+  TrendingUp,
+  FileSpreadsheet,
   Settings,
-  Wallet,
-  ChevronRightIcon,
+  LifeBuoy,
   ChevronsUpDown,
   LogOut,
-  Zap
-} from "lucide-react"
+  Sparkles,
+  ShieldCheck,
+  User,
+  Bell,
+} from 'lucide-react';
 
-const data = {
-  navGroups: [
-    {
-      title: "OVERVIEW",
-      items: [
-        { title: "Overview", url: "/dashboard", icon: LayoutDashboard, isActive: true },
-      ],
-    },
-    {
-      title: "PAYMENTS",
-      items: [
-        { title: "Payments", url: "/dashboard/payments", icon: CreditCard },
-        { title: "Payment Links", url: "/dashboard/payment-links", icon: Link2 },
-        { title: "Refunds", url: "/dashboard/refunds", icon: Undo2 },
-      ],
-    },
-    {
-      title: "CUSTOMERS",
-      items: [
-        { title: "Customers", url: "/dashboard/customers", icon: Users },
-      ],
-    },
-    {
-      title: "PRODUCTS & BILLING",
-      items: [
-        { title: "Products", url: "/dashboard/products", icon: Package },
-        { title: "Invoices", url: "/dashboard/invoices", icon: FileText },
-        { title: "Subscriptions", url: "/dashboard/subscriptions", icon: Repeat },
-      ],
-    },
-    {
-      title: "MONEY",
-      items: [
-        { title: "Balance", url: "/dashboard/balance", icon: Wallet },
-        { title: "Payouts", url: "/dashboard/payouts", icon: Banknote },
-        { title: "Transactions", url: "/dashboard/transactions", icon: ArrowRightLeft },
-      ],
-    },
-    {
-      title: "INSIGHTS",
-      items: [
-        { title: "Analytics", url: "/dashboard/analytics", icon: BarChart3 },
-      ],
-    },
-    {
-      title: "DEVELOPERS",
-      items: [
-        { title: "API Keys", url: "/dashboard/api-keys", icon: Key },
-        { title: "Webhooks", url: "/dashboard/webhooks", icon: Webhook },
-        { title: "Events", url: "/dashboard/events", icon: Activity },
-        { title: "API Logs", url: "/dashboard/api-logs", icon: TerminalSquare },
-      ],
-    },
-    {
-      title: "ACCOUNT",
-      items: [
-        { title: "Team", url: "/dashboard/team", icon: Users2 },
-        { title: "Notifications", url: "/dashboard/notifications", icon: Bell },
-        { title: "Settings", url: "/dashboard/settings", icon: Settings },
-      ],
-    },
-  ],
+interface NavItem {
+  title: string;
+  url: string;
+  icon: React.ComponentType<{ className?: string }>;
+  isActive?: boolean;
+  badge?: string;
+  badgeTone?: 'default' | 'accent' | 'warning';
 }
+
+interface NavGroup {
+  title: string;
+  items: NavItem[];
+}
+
+const navGroups: NavGroup[] = [
+  {
+    title: 'CORE WORKFORCE',
+    items: [
+      {
+        title: 'Dashboard',
+        url: '/dashboard',
+        icon: LayoutDashboard,
+        isActive: true,
+      },
+      {
+        title: 'Employees',
+        url: '#employees',
+        icon: Users,
+        badge: '1,248',
+      },
+      {
+        title: 'Departments',
+        url: '#departments',
+        icon: Building,
+        badge: '6',
+      },
+    ],
+  },
+  {
+    title: 'TIME & COMPENSATION',
+    items: [
+      {
+        title: 'Attendance',
+        url: '#attendance',
+        icon: Clock,
+        badge: '87.1%',
+        badgeTone: 'accent',
+      },
+      {
+        title: 'Leave Management',
+        url: '#leave',
+        icon: CalendarOff,
+        badge: '4 pending',
+        badgeTone: 'warning',
+      },
+      {
+        title: 'Payroll',
+        url: '#payroll',
+        icon: Banknote,
+      },
+    ],
+  },
+  {
+    title: 'WORK & TALENT',
+    items: [
+      {
+        title: 'Projects',
+        url: '#projects',
+        icon: FolderKanban,
+      },
+      {
+        title: 'Tasks',
+        url: '#tasks',
+        icon: ListChecks,
+        badge: '12',
+      },
+      {
+        title: 'Performance',
+        url: '#performance',
+        icon: TrendingUp,
+      },
+    ],
+  },
+  {
+    title: 'SYSTEM & SUPPORT',
+    items: [
+      {
+        title: 'Reports',
+        url: '#reports',
+        icon: FileSpreadsheet,
+      },
+      {
+        title: 'Settings',
+        url: '#settings',
+        icon: Settings,
+      },
+      {
+        title: 'Help & Support',
+        url: '#help',
+        icon: LifeBuoy,
+      },
+    ],
+  },
+];
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
-    <Sidebar className="border-r border-border bg-sidebar" {...props}>
-      <SidebarHeader className="pt-4 pb-2 px-2">
-        <div className="flex items-center px-2 py-2 mb-2">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-primary text-white shadow-lg shadow-blue-500/20">
-            <Zap className="h-5 w-5 fill-current" />
+    <Sidebar className="border-r border-border bg-sidebar select-none" {...props}>
+      {/* Brand Header */}
+      <SidebarHeader className="pt-4 pb-2 px-3 border-b border-border/50">
+        <div className="flex items-center gap-3 px-1.5 py-1">
+          {/* Brand Logo with selective primary gradient */}
+          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-gradient-primary text-white shadow-sm shadow-blue-600/25">
+            <Sparkles className="h-4.5 w-4.5 fill-white/20 text-white" />
           </div>
-          <div className="ml-3 flex flex-col">
-            <span className="font-bold text-xl tracking-tight text-foreground leading-tight">PayFlow</span>
-            <span className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider">Payments Platform</span>
+          <div className="flex flex-col min-w-0">
+            <div className="flex items-center gap-1.5">
+              <span className="font-bold text-sm tracking-tight text-foreground truncate">
+                PayFlow EMS
+              </span>
+              <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[9px] font-semibold tracking-wider uppercase bg-primary/10 text-primary border border-primary/20">
+                PRO
+              </span>
+            </div>
+            <span className="text-[11px] font-medium text-text-secondary truncate">
+              Employee Management
+            </span>
           </div>
         </div>
       </SidebarHeader>
-      
-      <SidebarContent className="gap-2 px-2">
-        {data.navGroups.map((group) => {
-          const isCollapsible = group.items.length > 1;
 
-          if (!isCollapsible) {
-            return (
-              <SidebarGroup key={group.title} className="px-0 py-0">
-                <SidebarGroupLabel className="text-[10px] font-bold text-muted-foreground tracking-widest uppercase mb-1 px-2">
-                  {group.title}
-                </SidebarGroupLabel>
-                <SidebarGroupContent>
-                  <SidebarMenu>
-                    {group.items.map((item) => (
-                      <SidebarMenuItem key={item.title}>
-                        <SidebarMenuButton
-                          isActive={item.isActive}
-                          render={<a href={item.url} />}
-                          className={`rounded-[10px] transition-all duration-200 h-9 px-3 ${
-                            item.isActive
-                              ? "bg-gradient-primary text-white shadow-sm shadow-blue-500/20 data-[active=true]:bg-gradient-primary data-[active=true]:text-white font-medium hover:bg-gradient-primary hover:text-white"
-                              : "text-slate-500 dark:text-slate-400 hover:text-foreground hover:bg-blue-50/50 dark:hover:bg-blue-900/20"
-                          }`}
-                        >
-                          <item.icon className={`h-4 w-4 mr-2 ${item.isActive ? "text-white" : "opacity-80"}`} />
-                          <span>{item.title}</span>
-                        </SidebarMenuButton>
-                      </SidebarMenuItem>
-                    ))}
-                  </SidebarMenu>
-                </SidebarGroupContent>
-              </SidebarGroup>
-            )
-          }
+      {/* Navigation Content */}
+      <SidebarContent className="gap-4 px-2 py-3 overflow-y-auto">
+        {navGroups.map((group) => (
+          <SidebarGroup key={group.title} className="px-1 py-0">
+            <SidebarGroupLabel className="text-[10px] font-semibold text-text-secondary/80 tracking-wider uppercase mb-1.5 px-2">
+              {group.title}
+            </SidebarGroupLabel>
+            <SidebarGroupContent>
+              <SidebarMenu className="gap-0.5">
+                {group.items.map((item) => {
+                  const isActive = !!item.isActive;
+                  return (
+                    <SidebarMenuItem key={item.title}>
+                      <SidebarMenuButton
+                        isActive={isActive}
+                        render={<a href={item.url} />}
+                        className={`group relative flex items-center justify-between rounded-md px-2.5 py-2 text-xs font-medium transition-all duration-150 h-8.5 ${
+                          isActive
+                            ? 'bg-gradient-primary text-white shadow-sm font-semibold hover:bg-gradient-primary hover:text-white'
+                            : 'text-text-secondary hover:text-foreground hover:bg-surface-muted/80'
+                        }`}
+                      >
+                        <div className="flex items-center gap-2.5 min-w-0">
+                          <item.icon
+                            className={`h-4 w-4 shrink-0 transition-colors ${
+                              isActive ? 'text-white' : 'text-text-secondary group-hover:text-foreground'
+                            }`}
+                          />
+                          <span className="truncate">{item.title}</span>
+                        </div>
 
-          return (
-            <Collapsible
-              key={group.title}
-              title={group.title}
-              defaultOpen
-              className="group/collapsible"
-            >
-              <SidebarGroup className="px-0 py-0">
-                <SidebarGroupLabel
-                  className="group/label text-[10px] font-bold text-muted-foreground tracking-widest uppercase mb-1 px-2 hover:bg-transparent hover:text-foreground cursor-pointer transition-colors"
-                  render={<CollapsibleTrigger />}
-                >
-                  {group.title}
-                  <ChevronRightIcon className="ml-auto transition-transform group-data-open/collapsible:rotate-90 h-3.5 w-3.5" />
-                </SidebarGroupLabel>
-                <CollapsibleContent>
-                  <SidebarGroupContent>
-                    <SidebarMenu>
-                      {group.items.map((item) => (
-                        <SidebarMenuItem key={item.title}>
-                          <SidebarMenuButton
-                            isActive={item.isActive}
-                            render={<a href={item.url} />}
-                            className={`rounded-[10px] transition-all duration-200 h-9 px-3 ${
-                              item.isActive
-                                ? "bg-gradient-primary text-white shadow-sm shadow-blue-500/20 data-[active=true]:bg-gradient-primary data-[active=true]:text-white font-medium hover:bg-gradient-primary hover:text-white"
-                                : "text-slate-500 dark:text-slate-400 hover:text-foreground hover:bg-blue-50/50 dark:hover:bg-blue-900/20"
+                        {item.badge && (
+                          <span
+                            className={`ml-auto text-[10px] font-medium px-1.5 py-0.5 rounded tracking-tight transition-colors ${
+                              isActive
+                                ? 'bg-white/20 text-white font-semibold'
+                                : item.badgeTone === 'warning'
+                                ? 'bg-warning/10 text-warning border border-warning/20'
+                                : item.badgeTone === 'accent'
+                                ? 'bg-success/10 text-success border border-success/20'
+                                : 'bg-surface-muted text-text-secondary group-hover:text-foreground'
                             }`}
                           >
-                            <item.icon className={`h-4 w-4 mr-2 ${item.isActive ? "text-white" : "opacity-80"}`} />
-                            <span>{item.title}</span>
-                          </SidebarMenuButton>
-                        </SidebarMenuItem>
-                      ))}
-                    </SidebarMenu>
-                  </SidebarGroupContent>
-                </CollapsibleContent>
-              </SidebarGroup>
-            </Collapsible>
-          )
-        })}
+                            {item.badge}
+                          </span>
+                        )}
+                      </SidebarMenuButton>
+                    </SidebarMenuItem>
+                  );
+                })}
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        ))}
       </SidebarContent>
 
-      <SidebarFooter className="p-4 border-t border-border">
+      {/* Organization / User Profile Footer */}
+      <SidebarFooter className="p-3 border-t border-border/60 bg-surface/50">
         <SidebarMenu>
           <SidebarMenuItem>
             <DropdownMenu>
@@ -216,31 +239,55 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 render={
                   <SidebarMenuButton
                     size="lg"
-                    className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-xl p-2 h-auto transition-colors"
+                    className="w-full flex items-center gap-2.5 rounded-lg p-2 text-left hover:bg-surface-muted transition-colors border border-transparent hover:border-border"
                   />
                 }
               >
-                <div className="flex aspect-square size-9 items-center justify-center rounded-lg bg-gradient-primary text-white shadow-sm">
-                  <span className="font-bold text-xs">AC</span>
+                {/* Avatar with status indicator */}
+                <div className="relative shrink-0">
+                  <div className="h-8 w-8 rounded-full bg-gradient-primary text-white flex items-center justify-center font-bold text-xs shadow-sm">
+                    SJ
+                  </div>
+                  <span className="absolute bottom-0 right-0 h-2 w-2 rounded-full bg-success ring-2 ring-surface" />
                 </div>
-                <div className="grid flex-1 text-left text-sm leading-tight ml-1">
-                  <span className="truncate font-semibold text-foreground">Acme Corp</span>
-                  <span className="truncate text-xs text-muted-foreground">admin@acme.com</span>
+                <div className="grid flex-1 text-left text-xs leading-snug min-w-0">
+                  <span className="truncate font-semibold text-foreground">Sarah Jenkins</span>
+                  <span className="truncate text-[11px] text-text-secondary">HR Director • Admin</span>
                 </div>
-                <ChevronsUpDown className="ml-auto size-4 text-muted-foreground" />
+                <ChevronsUpDown className="ml-auto h-3.5 w-3.5 text-text-secondary" />
               </DropdownMenuTrigger>
               <DropdownMenuContent
-                className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-xl border-border"
-                side="bottom"
-                align="end"
+                className="w-56 rounded-lg border-border bg-surface shadow-lg"
+                side="top"
+                align="start"
                 sideOffset={8}
               >
-                <DropdownMenuItem className="cursor-pointer">
-                  <Settings className="mr-2 h-4 w-4 text-muted-foreground" />
-                  <span>Settings</span>
+                <DropdownMenuLabel className="font-normal px-2.5 py-2">
+                  <div className="flex flex-col space-y-1">
+                    <p className="text-xs font-semibold leading-none text-foreground">Sarah Jenkins</p>
+                    <p className="text-[11px] leading-none text-text-secondary">sarah.jenkins@payflow.internal</p>
+                  </div>
+                </DropdownMenuLabel>
+                <DropdownMenuSeparator className="bg-border" />
+                <DropdownMenuItem className="cursor-pointer text-xs py-2 px-2.5">
+                  <User className="mr-2 h-3.5 w-3.5 text-text-secondary" />
+                  <span>My Profile</span>
                 </DropdownMenuItem>
-                <DropdownMenuItem className="text-destructive cursor-pointer focus:bg-destructive/10 focus:text-destructive">
-                  <LogOut className="mr-2 h-4 w-4" />
+                <DropdownMenuItem className="cursor-pointer text-xs py-2 px-2.5">
+                  <ShieldCheck className="mr-2 h-3.5 w-3.5 text-text-secondary" />
+                  <span>Admin Controls</span>
+                </DropdownMenuItem>
+                <DropdownMenuItem className="cursor-pointer text-xs py-2 px-2.5">
+                  <Bell className="mr-2 h-3.5 w-3.5 text-text-secondary" />
+                  <span>Notification Center</span>
+                </DropdownMenuItem>
+                <DropdownMenuItem className="cursor-pointer text-xs py-2 px-2.5">
+                  <Settings className="mr-2 h-3.5 w-3.5 text-text-secondary" />
+                  <span>Org Settings</span>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator className="bg-border" />
+                <DropdownMenuItem className="cursor-pointer text-xs py-2 px-2.5 text-danger focus:bg-danger/10 focus:text-danger">
+                  <LogOut className="mr-2 h-3.5 w-3.5" />
                   <span>Log out</span>
                 </DropdownMenuItem>
               </DropdownMenuContent>
@@ -250,5 +297,5 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>
-  )
+  );
 }
