@@ -72,7 +72,7 @@ export function AddEmployeeDialog({
       <DialogContent className="sm:max-w-md rounded-xl border-border bg-surface shadow-xl p-5 sm:p-6">
         <DialogHeader className="pb-3 border-b border-border/60">
           <div className="flex items-center gap-2.5">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-primary text-white shadow-xs">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-primary">
               <UserPlus className="h-4 w-4" />
             </div>
             <div>
@@ -87,7 +87,7 @@ export function AddEmployeeDialog({
         </DialogHeader>
 
         <form onSubmit={handleSubmit} className="space-y-4 py-2">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-1.5 sm:col-span-2">
               <Label className="text-xs font-semibold text-foreground">Full Name</Label>
               <Input
@@ -95,7 +95,7 @@ export function AddEmployeeDialog({
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                 required
-                className="h-8.5 text-xs rounded-lg border-border bg-surface"
+                className="h-8 text-xs rounded-lg border-border bg-surface"
               />
             </div>
 
@@ -107,7 +107,7 @@ export function AddEmployeeDialog({
                 value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                 required
-                className="h-8.5 text-xs rounded-lg border-border bg-surface"
+                className="h-8 text-xs rounded-lg border-border bg-surface"
               />
             </div>
 
@@ -121,7 +121,7 @@ export function AddEmployeeDialog({
                     department: e.target.value as Employee['department'],
                   })
                 }
-                className="w-full h-8.5 text-xs rounded-lg border border-border bg-surface px-2.5 text-foreground focus:outline-none focus:ring-1 focus:ring-primary"
+                className="w-full h-8 text-xs rounded-lg border border-border bg-surface px-2.5 text-foreground focus:outline-none focus:ring-1 focus:ring-primary"
               >
                 <option value="Engineering">Engineering</option>
                 <option value="Design">Design</option>
@@ -138,7 +138,7 @@ export function AddEmployeeDialog({
                 placeholder="e.g. Senior Frontend Dev"
                 value={formData.role}
                 onChange={(e) => setFormData({ ...formData, role: e.target.value })}
-                className="h-8.5 text-xs rounded-lg border-border bg-surface"
+                className="h-8 text-xs rounded-lg border-border bg-surface"
               />
             </div>
 
@@ -152,7 +152,7 @@ export function AddEmployeeDialog({
                     type: e.target.value as Employee['type'],
                   })
                 }
-                className="w-full h-8.5 text-xs rounded-lg border border-border bg-surface px-2.5 text-foreground focus:outline-none focus:ring-1 focus:ring-primary"
+                className="w-full h-8 text-xs rounded-lg border border-border bg-surface px-2.5 text-foreground focus:outline-none focus:ring-1 focus:ring-primary"
               >
                 <option value="Full-time">Full-time</option>
                 <option value="Contract">Contract</option>
@@ -170,7 +170,7 @@ export function AddEmployeeDialog({
                     status: e.target.value as Employee['status'],
                   })
                 }
-                className="w-full h-8.5 text-xs rounded-lg border border-border bg-surface px-2.5 text-foreground focus:outline-none focus:ring-1 focus:ring-primary"
+                className="w-full h-8 text-xs rounded-lg border border-border bg-surface px-2.5 text-foreground focus:outline-none focus:ring-1 focus:ring-primary"
               >
                 <option value="Active">Active</option>
                 <option value="On Leave">On Leave</option>

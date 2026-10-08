@@ -19,7 +19,7 @@ interface QuickActionsBarProps {
 export function QuickActionsBar({ actions, onSelectAction }: QuickActionsBarProps) {
   return (
     <div className="rounded-xl border border-border bg-surface p-5 shadow-xs">
-      <div className="flex items-center justify-between pb-3 border-b border-border/50 mb-3.5">
+      <div className="flex items-center justify-between pb-3 border-b border-border/50 mb-3">
         <div className="flex items-center gap-2">
           <div className="flex h-6 w-6 items-center justify-center rounded-md bg-primary/10 text-primary">
             <Zap className="h-3.5 w-3.5 fill-current" />
@@ -49,7 +49,7 @@ export function QuickActionsBar({ actions, onSelectAction }: QuickActionsBarProp
             <button
               key={act.id}
               onClick={() => onSelectAction(act.id)}
-              className={`group text-left p-3.5 rounded-lg border transition-all duration-150 flex flex-col justify-between ${
+              className={`group text-left p-4 rounded-lg border transition-all duration-150 flex flex-col justify-between ${
                 isPrimary
                   ? 'border-primary/30 bg-primary/5 hover:bg-primary/10 hover:border-primary/50 shadow-xs'
                   : 'border-border bg-surface hover:bg-surface-muted hover:border-border/80 shadow-xs'

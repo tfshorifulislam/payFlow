@@ -101,15 +101,11 @@ export function AttendanceOverviewChart({
 
           {/* Center Text inside Donut */}
           <div className="absolute inset-0 flex flex-col items-center justify-center text-center pointer-events-none">
-            <span className="text-2xl font-bold tracking-tight text-foreground font-mono">
+            <span className="text-[26px] font-semibold tracking-tight text-foreground tabular-nums">
               {presentMetric ? `${presentMetric.percentage}%` : '—'}
             </span>
             <span className="text-[11px] font-medium text-text-secondary">
-              Present Rate
-            </span>
-            <span className="text-[10px] text-text-secondary/70">
-              {(presentMetric?.count ?? 0).toLocaleString('en-US')} /{' '}
-              {totalEmployees.toLocaleString('en-US')}
+              Present Today
             </span>
           </div>
         </div>
@@ -141,10 +137,10 @@ export function AttendanceOverviewChart({
                     </span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className="font-bold text-foreground font-mono">
+                    <span className="font-bold text-foreground tabular-nums">
                       {item.count.toLocaleString('en-US')}
                     </span>
-                    <span className="text-[11px] text-text-secondary font-mono w-10 text-right">
+                    <span className="text-[11px] text-text-secondary tabular-nums w-10 text-right">
                       {item.percentage}%
                     </span>
                   </div>
@@ -160,10 +156,6 @@ export function AttendanceOverviewChart({
                     }}
                   />
                 </div>
-
-                <p className="text-[10px] text-text-secondary/80 mt-1.5">
-                  {item.description}
-                </p>
               </div>
             );
           })}
@@ -173,7 +165,10 @@ export function AttendanceOverviewChart({
       {/* Footer info link */}
       <div className="pt-3 border-t border-border/50 flex items-center justify-between text-xs">
         <span className="text-text-secondary text-[11px]">
-          Target rate: <b className="text-foreground font-medium">&gt;85%</b> &bull; Tracking standard shift
+          <b className="text-foreground font-semibold tabular-nums">
+            {(presentMetric?.count ?? 0).toLocaleString('en-US')} of {totalEmployees.toLocaleString('en-US')}
+          </b>{' '}
+          employees &bull; target rate <b className="text-foreground font-medium">&gt;85%</b>
         </span>
         <a
           href="#attendance"

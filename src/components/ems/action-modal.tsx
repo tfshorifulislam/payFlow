@@ -73,7 +73,7 @@ export function ActionModal({
       <DialogContent className="sm:max-w-md rounded-xl border-border bg-surface shadow-xl p-5 sm:p-6">
         <DialogHeader className="pb-3 border-b border-border/60">
           <div className="flex items-center gap-2.5">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-primary text-white shadow-xs">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-primary">
               <IconComp className="h-4 w-4" />
             </div>
             <div>
@@ -100,11 +100,11 @@ export function ActionModal({
               <>
                 <div className="space-y-1">
                   <Label className="text-xs font-semibold text-foreground">Department Name</Label>
-                  <Input placeholder="e.g. Artificial Intelligence Labs" className="h-8.5 text-xs rounded-lg" />
+                  <Input placeholder="e.g. Artificial Intelligence Labs" className="h-8 text-xs rounded-lg" />
                 </div>
                 <div className="space-y-1">
                   <Label className="text-xs font-semibold text-foreground">Department Lead / Director</Label>
-                  <Input placeholder="e.g. Dr. Jennifer Wu" className="h-8.5 text-xs rounded-lg" />
+                  <Input placeholder="e.g. Dr. Jennifer Wu" className="h-8 text-xs rounded-lg" />
                 </div>
               </>
             )}
@@ -117,15 +117,15 @@ export function ActionModal({
                 <div className="p-3 rounded-lg bg-surface-muted border border-border/60 space-y-1">
                   <div className="flex justify-between">
                     <span>Present checked-in:</span>
-                    <span className="font-bold font-mono">1,087</span>
+                    <span className="font-bold tabular-nums">1,087</span>
                   </div>
                   <div className="flex justify-between">
                     <span>Late arrivals:</span>
-                    <span className="font-bold font-mono text-warning">84</span>
+                    <span className="font-bold tabular-nums text-warning">84</span>
                   </div>
                   <div className="flex justify-between">
                     <span>Unreported:</span>
-                    <span className="font-bold font-mono text-danger">35</span>
+                    <span className="font-bold tabular-nums text-danger">35</span>
                   </div>
                 </div>
               </div>
@@ -140,7 +140,7 @@ export function ActionModal({
                   </div>
                   <div className="flex justify-between">
                     <span className="text-text-secondary">Total Net Payout:</span>
-                    <span className="font-bold font-mono text-success">$2,418,920.00</span>
+                    <span className="font-bold tabular-nums text-success">$2,418,920.00</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-text-secondary">Employees to Process:</span>

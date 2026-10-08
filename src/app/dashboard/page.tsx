@@ -91,7 +91,7 @@ export default function DashboardPage() {
         )}
 
         {/* Main Dashboard Canvas */}
-        <main className="flex-1 p-4 sm:p-6 lg:p-8 space-y-6 sm:space-y-7 max-w-7xl mx-auto w-full">
+        <main className="flex-1 p-4 sm:p-6 lg:p-8 space-y-6 max-w-7xl mx-auto w-full">
           {/* 3. DASHBOARD HEADER */}
           <div className="reveal">
             <DashboardHeader
@@ -103,14 +103,6 @@ export default function DashboardPage() {
           {/* 4. KPI STATISTICS */}
           <section aria-label="Workforce key metrics" className="reveal reveal-1">
             <KpiStatsGrid metrics={kpiMetricsData} />
-          </section>
-
-          {/* 10. QUICK ACTIONS BAR */}
-          <section aria-label="Management quick actions" className="reveal reveal-2">
-            <QuickActionsBar
-              actions={quickActionsData}
-              onSelectAction={handleQuickAction}
-            />
           </section>
 
           {/* CHARTS ROW: 5. EMPLOYEE OVERVIEW & 6. ATTENDANCE OVERVIEW */}
@@ -166,6 +158,14 @@ export default function DashboardPage() {
                 onActionClick={handleEventAction}
               />
             </div>
+          </section>
+
+          {/* 10. QUICK ACTIONS BAR */}
+          <section aria-label="Management quick actions" className="reveal reveal-5">
+            <QuickActionsBar
+              actions={quickActionsData}
+              onSelectAction={handleQuickAction}
+            />
           </section>
         </main>
 

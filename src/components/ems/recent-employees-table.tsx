@@ -8,6 +8,7 @@ import {
   Edit2,
   UserCheck,
   UserX,
+  ChevronDown,
   ChevronLeft,
   ChevronRight,
   ShieldAlert,
@@ -68,7 +69,7 @@ export function RecentEmployeesTable({
   return (
     <div className="rounded-xl border border-border bg-surface shadow-xs overflow-hidden">
       {/* Table Header & Controls */}
-      <div className="p-4 sm:p-5 border-b border-border/60 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3.5">
+      <div className="p-4 sm:p-5 border-b border-border/60 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
             <h2 className="text-sm font-semibold tracking-tight text-foreground">
@@ -103,23 +104,26 @@ export function RecentEmployeesTable({
           </div>
 
           {/* Department Filter Dropdown */}
-          <select
-            value={selectedDept}
-            onChange={(e) => setSelectedDept(e.target.value)}
-            className="h-8 text-xs font-medium rounded-lg border border-border bg-surface px-2.5 text-foreground focus:outline-none focus:ring-1 focus:ring-primary"
-          >
-            {departments.map((d) => (
-              <option key={d} value={d}>
-                {d === 'All' ? 'All Departments' : d}
-              </option>
-            ))}
-          </select>
+          <div className="relative">
+            <select
+              value={selectedDept}
+              onChange={(e) => setSelectedDept(e.target.value)}
+              className="h-8 text-xs font-medium rounded-lg border border-border bg-surface pl-2.5 pr-7 text-foreground focus:outline-none focus:ring-1 focus:ring-primary appearance-none"
+            >
+              {departments.map((d) => (
+                <option key={d} value={d}>
+                  {d === 'All' ? 'All Departments' : d}
+                </option>
+              ))}
+            </select>
+            <ChevronDown className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-text-secondary" />
+          </div>
         </div>
       </div>
 
       {/* Table Container */}
       <div className="overflow-x-auto">
-        <table className="w-full text-left border-collapse text-xs">
+        <table className="w-full min-w-[720px] text-left border-collapse text-xs">
           <thead>
             <tr className="border-b border-border/50 bg-surface-muted/50 text-[11px] font-semibold text-text-secondary uppercase tracking-wider">
               <th className="py-3 px-4 sm:px-5">Employee</th>
@@ -158,20 +162,6 @@ export function RecentEmployeesTable({
                     : emp.status === 'On Leave'
                       ? 'chip-info'
                       : 'chip-neutral';
-
-                // Department color accent
-                let deptBadgeClass = 'bg-blue-500/10 text-blue-600 dark:text-blue-400 border-blue-500/20';
-                if (emp.department === 'Design') {
-                  deptBadgeClass = 'bg-purple-500/10 text-purple-600 dark:text-purple-400 border-purple-500/20';
-                } else if (emp.department === 'Marketing') {
-                  deptBadgeClass = 'bg-violet-500/10 text-violet-600 dark:text-violet-400 border-violet-500/20';
-                } else if (emp.department === 'Sales') {
-                  deptBadgeClass = 'bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border-indigo-500/20';
-                } else if (emp.department === 'HR') {
-                  deptBadgeClass = 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20';
-                } else if (emp.department === 'Finance') {
-                  deptBadgeClass = 'bg-sky-500/10 text-sky-600 dark:text-sky-400 border-sky-500/20';
-                }
 
                 return (
                   <tr
@@ -215,9 +205,7 @@ export function RecentEmployeesTable({
 
                     {/* Department */}
                     <td className="py-3 px-4">
-                      <span
-                        className={`inline-block px-2 py-0.5 rounded text-[11px] font-medium border ${deptBadgeClass}`}
-                      >
+                      <span className="text-xs font-medium text-text-secondary">
                         {emp.department}
                       </span>
                     </td>
@@ -236,7 +224,7 @@ export function RecentEmployeesTable({
                     </td>
 
                     {/* Joined Date */}
-                    <td className="py-3 px-4 text-text-secondary font-mono text-[11px] whitespace-nowrap">
+                    <td className="py-3 px-4 text-text-secondary tabular-nums text-[12px] whitespace-nowrap">
                       {emp.joinedDate}
                     </td>
 
@@ -327,7 +315,7 @@ export function RecentEmployeesTable({
           >
             <ChevronLeft className="h-3.5 w-3.5" />
           </Button>
-          <span className="px-2 font-mono text-[11px] text-foreground font-medium">Page 1 of 156</span>
+          <span className="px-2 text-[11px] text-foreground font-medium tabular-nums">Page 1 of 156</span>
           <Button
             variant="outline"
             size="icon-xs"

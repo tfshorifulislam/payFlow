@@ -92,7 +92,7 @@ export function UpcomingEvents({ events, onActionClick }: UpcomingEventsProps) {
               <div className="flex items-start gap-3 min-w-0">
                 {/* Date / Icon Box */}
                 <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-surface-muted border border-border text-foreground font-semibold">
-                  <IconComponent className="h-4.5 w-4.5 text-text-secondary group-hover:text-primary transition-colors" />
+                  <IconComponent className="h-4 w-4 text-text-secondary group-hover:text-primary transition-colors" />
                 </div>
 
                 <div className="flex flex-col min-w-0">
@@ -124,7 +124,7 @@ export function UpcomingEvents({ events, onActionClick }: UpcomingEventsProps) {
                   variant="outline"
                   size="sm"
                   onClick={() => onActionClick?.(evt)}
-                  className="self-start sm:self-center shrink-0 border-border bg-surface hover:bg-surface-muted text-xs font-medium h-7.5 px-2.5 rounded-md shadow-xs transition-colors"
+                  className="self-start sm:self-center shrink-0 border-border bg-surface hover:bg-surface-muted text-xs font-medium h-8 px-2.5 rounded-md shadow-xs transition-colors"
                 >
                   {evt.actionLabel}
                 </Button>

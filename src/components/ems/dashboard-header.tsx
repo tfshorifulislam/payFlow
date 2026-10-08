@@ -16,27 +16,40 @@ const DATE_FORMAT_OPTIONS: Intl.DateTimeFormatOptions = {
   year: 'numeric',
 };
 
+function greetingForHour(hour: number) {
+  if (hour < 12) return 'Good morning';
+  if (hour < 18) return 'Good afternoon';
+  return 'Good evening';
+}
+
 export function DashboardHeader({
   onAddEmployeeClick,
   onExportClick,
 }: DashboardHeaderProps) {
   // Client clock via external store: prerender-safe (server snapshot is static),
   // lint-safe (no setState-in-effect), refreshes every 30s for midnight rollover.
-  const formattedDate = React.useSyncExternalStore(
+  const now = React.useSyncExternalStore(
     (onChange) => {
       const id = setInterval(onChange, 30_000);
       return () => clearInterval(id);
     },
-    () => new Date().toLocaleDateString('en-US', DATE_FORMAT_OPTIONS),
-    () => ''
+    () => Date.now(),
+    () => 0
+  );
+
+  const hour = now ? new Date(now).getHours() : 12;
+  const greeting = greetingForHour(hour);
+  const formattedDate = React.useMemo(
+    () => (now ? new Date(now).toLocaleDateString('en-US', DATE_FORMAT_OPTIONS) : ''),
+    [now]
   );
 
   return (
     <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-1">
       <div className="space-y-1">
         <div className="flex items-center gap-2.5">
-          <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-foreground">
-            Good morning, Admin
+          <h1 className="text-2xl font-bold tracking-tight text-foreground">
+            {greeting}, Admin
           </h1>
           <span className="chip chip-success [&>span]:animate-none [&::before]:animate-pulse">
             Live
@@ -68,7 +81,7 @@ export function DashboardHeader({
         {/* Primary CTA: Add Employee with primary gradient */}
         <Button
           onClick={onAddEmployeeClick}
-          className="bg-gradient-primary hover:opacity-95 text-white font-medium text-xs h-9 px-3.5 rounded-lg shadow-sm shadow-blue-600/20 active:translate-y-px transition-all"
+          className="bg-gradient-primary hover:opacity-95 text-white font-medium text-xs h-9 px-4 rounded-lg shadow-sm shadow-blue-600/20 active:translate-y-px transition-all"
         >
           <Plus className="h-4 w-4 mr-1.5" />
           <span>Add Employee</span>

@@ -91,10 +91,10 @@ export function DepartmentDistribution({
                       {dept.openRoles} open
                     </span>
                   )}
-                  <span className="text-xs font-bold font-mono text-foreground">
+                  <span className="text-xs font-bold tabular-nums text-foreground">
                     {dept.count}
                   </span>
-                  <span className="text-[11px] font-mono text-text-secondary w-10 text-right">
+                  <span className="text-[11px] tabular-nums text-text-secondary w-10 text-right">
                     {dept.percentage}%
                   </span>
                 </div>

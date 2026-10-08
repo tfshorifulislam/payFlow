@@ -9,8 +9,8 @@ interface EmployeeGrowthChartProps {
 }
 
 export function EmployeeGrowthChart({ data }: EmployeeGrowthChartProps) {
-  const [activeMetric, setActiveMetric] = React.useState<'headcount' | 'hires' | 'split'>('headcount');
-  const [hoveredIndex, setHoveredIndex] = React.useState<number | null>(6); // Default to last month (Oct)
+  const [activeMetric, setActiveMetric] = React.useState<'headcount' | 'hires'>('headcount');
+  const [hoveredIndex, setHoveredIndex] = React.useState<number | null>(6);
 
   // Chart dimensions inside SVG viewBox
   const width = 720;
@@ -24,14 +24,14 @@ export function EmployeeGrowthChart({ data }: EmployeeGrowthChartProps) {
   const chartHeight = height - paddingTop - paddingBottom;
 
   // Value bounds based on metric
-  const minVal = activeMetric === 'headcount' ? 900 : activeMetric === 'hires' ? 0 : 800;
-  const maxVal = activeMetric === 'headcount' ? 1300 : activeMetric === 'hires' ? 70 : 1300;
+  const minVal = activeMetric === 'headcount' ? 900 : 0;
+  const maxVal = activeMetric === 'headcount' ? 1300 : 70;
 
   // Compute (x, y) coordinates for each point
   const points = React.useMemo(() => {
     return data.map((d, index) => {
       const x = paddingLeft + (index / (data.length - 1)) * chartWidth;
-      const val = activeMetric === 'headcount' ? d.headcount : activeMetric === 'hires' ? d.hires : d.headcount;
+      const val = activeMetric === 'headcount' ? d.headcount : d.hires;
       const normalized = (val - minVal) / (maxVal - minVal);
       const y = paddingTop + chartHeight - normalized * chartHeight;
       return { x, y, data: d, val };
@@ -74,7 +74,7 @@ export function EmployeeGrowthChart({ data }: EmployeeGrowthChartProps) {
             <h2 className="text-sm font-semibold tracking-tight text-foreground">
               Employee Growth
             </h2>
-            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-semibold bg-primary/10 text-primary border border-primary/20">
+            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-semibold bg-primary/10 text-primary">
               <TrendingUp className="h-3 w-3" />
               +27.3% YoY
             </span>
@@ -88,7 +88,7 @@ export function EmployeeGrowthChart({ data }: EmployeeGrowthChartProps) {
         <div className="flex items-center bg-surface-muted p-0.5 rounded-lg border border-border/60 self-start sm:self-auto">
           <button
             onClick={() => setActiveMetric('headcount')}
-            className={`px-2.5 py-1 text-[11px] font-medium rounded-md transition-all ${
+            className={`px-3 py-1 text-xs font-medium rounded-md transition-all ${
               activeMetric === 'headcount'
                 ? 'bg-surface text-foreground shadow-xs font-semibold'
                 : 'text-text-secondary hover:text-foreground'
@@ -98,7 +98,7 @@ export function EmployeeGrowthChart({ data }: EmployeeGrowthChartProps) {
           </button>
           <button
             onClick={() => setActiveMetric('hires')}
-            className={`px-2.5 py-1 text-[11px] font-medium rounded-md transition-all ${
+            className={`px-3 py-1 text-xs font-medium rounded-md transition-all ${
               activeMetric === 'hires'
                 ? 'bg-surface text-foreground shadow-xs font-semibold'
                 : 'text-text-secondary hover:text-foreground'
@@ -106,29 +106,19 @@ export function EmployeeGrowthChart({ data }: EmployeeGrowthChartProps) {
           >
             Monthly Hires
           </button>
-          <button
-            onClick={() => setActiveMetric('split')}
-            className={`px-2.5 py-1 text-[11px] font-medium rounded-md transition-all ${
-              activeMetric === 'split'
-                ? 'bg-surface text-foreground shadow-xs font-semibold'
-                : 'text-text-secondary hover:text-foreground'
-            }`}
-          >
-            Staff Split
-          </button>
         </div>
       </div>
 
-      {/* Chart Canvas */}
-      <div className="relative mt-4 w-full h-[240px] sm:h-[260px]">
+      {/* Chart Canvas — horizontally scrollable so labels stay legible on mobile */}
+      <div className="relative mt-4 w-full overflow-x-auto">
         {/* Hover Information Card */}
         {activePoint && (
           <div className="absolute top-1 right-2 z-10 pointer-events-none hidden sm:flex items-center gap-3 bg-surface/95 backdrop-blur-md border border-border px-3 py-1.5 rounded-lg shadow-sm">
             <div className="flex flex-col">
-              <span className="text-[10px] font-medium text-text-secondary uppercase tracking-wider">
+              <span className="text-[11px] font-medium text-text-secondary uppercase tracking-wider">
                 {activePoint.data.month} 2026
               </span>
-              <span className="text-sm font-bold text-foreground font-mono">
+              <span className="text-sm font-bold text-foreground tabular-nums">
                 {activePoint.data.headcount.toLocaleString()} employees
               </span>
             </div>
@@ -136,19 +126,19 @@ export function EmployeeGrowthChart({ data }: EmployeeGrowthChartProps) {
             <div className="flex items-center gap-3 text-[11px]">
               <div>
                 <span className="text-text-secondary">Hires: </span>
-                <span className="font-semibold text-success">
+                <span className="font-semibold text-success tabular-nums">
                   +{activePoint.data.hires}
                 </span>
               </div>
               <div>
                 <span className="text-text-secondary">Left: </span>
-                <span className="font-semibold text-danger">
+                <span className="font-semibold text-danger tabular-nums">
                   -{activePoint.data.departures}
                 </span>
               </div>
               <div>
                 <span className="text-text-secondary">FT / Con: </span>
-                <span className="font-semibold text-foreground font-mono">
+                <span className="font-semibold text-foreground tabular-nums">
                   {activePoint.data.fullTime}/{activePoint.data.contractors}
                 </span>
               </div>
@@ -158,7 +148,7 @@ export function EmployeeGrowthChart({ data }: EmployeeGrowthChartProps) {
 
         <svg
           viewBox={`0 0 ${width} ${height}`}
-          className="w-full h-full overflow-visible select-none"
+          className="w-full min-w-[560px] h-[230px] sm:h-[250px] overflow-visible select-none"
         >
           <defs>
             {/* Primary Brand Gradient for Area Fill */}
@@ -171,8 +161,8 @@ export function EmployeeGrowthChart({ data }: EmployeeGrowthChartProps) {
             {/* Gradient Line Stroke */}
             <linearGradient id="growthLineGradient" x1="0" y1="0" x2="1" y2="0">
               <stop offset="0%" stopColor="var(--color-primary)" />
-              <stop offset="50%" stopColor="var(--color-accent)" />
-              <stop offset="100%" stopColor="var(--color-secondary)" />
+              <stop offset="50%" stopColor="var(--color-secondary)" />
+              <stop offset="100%" stopColor="var(--color-accent)" />
             </linearGradient>
           </defs>
 
@@ -195,7 +185,7 @@ export function EmployeeGrowthChart({ data }: EmployeeGrowthChartProps) {
                   x={paddingLeft - 10}
                   y={y + 3.5}
                   textAnchor="end"
-                  className="fill-current text-[10px] font-mono text-text-secondary/70"
+                  className="fill-current text-[11px] tabular-nums text-text-secondary"
                 >
                   {labelVal}
                 </text>
@@ -289,21 +279,20 @@ export function EmployeeGrowthChart({ data }: EmployeeGrowthChartProps) {
       </div>
 
       {/* Chart Footer Highlights */}
-      <div className="mt-4 pt-3 border-t border-border/50 grid grid-cols-2 sm:grid-cols-3 gap-2 text-xs">
+      <div className="mt-4 pt-3 border-t border-border/50 grid grid-cols-3 gap-2 text-xs">
         <div className="flex flex-col">
-          <span className="text-[11px] text-text-secondary">Average Net Expansion</span>
-          <span className="font-semibold text-foreground font-mono">+38.2 / month</span>
+          <span className="text-[11px] text-text-secondary">Avg Net Expansion</span>
+          <span className="font-semibold text-foreground tabular-nums">+38.2 / mo</span>
         </div>
         <div className="flex flex-col">
           <span className="text-[11px] text-text-secondary">Peak Growth Month</span>
-          <span className="font-semibold text-foreground font-mono">September (+64 hires)</span>
+          <span className="font-semibold text-foreground tabular-nums">September</span>
         </div>
-        <div className="flex flex-col col-span-2 sm:col-span-1">
+        <div className="flex flex-col">
           <span className="text-[11px] text-text-secondary">Voluntary Retention</span>
-          <span className="font-semibold text-success font-mono">96.4%</span>
+          <span className="font-semibold text-success tabular-nums">96.4%</span>
         </div>
       </div>
     </div>
   );
 }
-

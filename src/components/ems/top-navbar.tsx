@@ -53,9 +53,10 @@ export function TopNavbar({
   }, []);
 
   return (
-    <header className="sticky top-0 z-20 flex h-16 shrink-0 items-center justify-between border-b border-border bg-surface/90 backdrop-blur-md px-4 lg:px-6 transition-colors">
-      {/* Left side: Sidebar trigger & Search */}
-      <div className="flex items-center gap-3 md:gap-4 flex-1 max-w-xl">
+    <header className="sticky top-0 z-20 border-b border-border bg-surface/90 backdrop-blur-md transition-colors">
+      <div className="mx-auto flex h-16 w-full max-w-7xl items-center justify-between px-4 lg:px-6">
+        {/* Left side: Sidebar trigger & Search */}
+        <div className="flex items-center gap-3 md:gap-4 flex-1 max-w-xl">
         <SidebarTrigger className="-ml-1 text-text-secondary hover:text-foreground hover:bg-surface-muted transition-colors rounded-lg p-1.5" />
         <Separator orientation="vertical" className="h-5 bg-border hidden sm:block" />
 
@@ -85,7 +86,7 @@ export function TopNavbar({
               <Button
                 variant="outline"
                 size="sm"
-                className="hidden sm:inline-flex border-border bg-surface hover:bg-surface-muted text-xs font-semibold text-foreground shadow-xs gap-1.5 h-8.5 px-3 rounded-lg"
+                className="hidden sm:inline-flex border-border bg-surface hover:bg-surface-muted text-xs font-semibold text-foreground shadow-xs gap-1.5 h-8 px-3 rounded-lg"
               />
             }
           >
@@ -226,16 +227,17 @@ export function TopNavbar({
         {/* User Identity Info */}
         <div className="flex items-center gap-2.5 pl-1">
           <div className="relative">
-            <div className="h-8 w-8 rounded-full bg-gradient-primary text-white flex items-center justify-center font-bold text-xs shadow-sm ring-1 ring-border">
+            <div className="h-8 w-8 rounded-full bg-primary text-white flex items-center justify-center font-bold text-xs shadow-sm ring-1 ring-border">
               SJ
             </div>
             <span className="absolute bottom-0 right-0 h-2 w-2 rounded-full bg-success ring-2 ring-surface" />
           </div>
           <div className="hidden lg:flex flex-col text-left">
             <span className="text-xs font-semibold text-foreground leading-tight">Sarah Jenkins</span>
-            <span className="text-[10px] font-medium text-text-secondary leading-tight">HR Director</span>
+            <span className="text-[11px] font-medium text-text-secondary leading-tight">HR Director</span>
           </div>
         </div>
+      </div>
       </div>
     </header>
   );

@@ -175,7 +175,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarHeader>
 
       {/* Navigation Content */}
-      <SidebarContent className="gap-4 px-2 py-3 overflow-y-auto">
+      <SidebarContent className="gap-5 px-2 py-3 overflow-y-auto">
         {navGroups.map((group) => (
           <SidebarGroup key={group.title} className="px-1 py-0">
             <SidebarGroupLabel className="text-[10px] font-semibold text-text-secondary/80 tracking-wider uppercase mb-1.5 px-2">
@@ -190,16 +190,16 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                       <SidebarMenuButton
                         isActive={isActive}
                         render={<a href={item.url} />}
-                        className={`group relative flex items-center justify-between rounded-md px-2.5 py-2 text-xs font-medium transition-all duration-150 h-8.5 ${
+                        className={`group relative flex items-center justify-between rounded-md px-2.5 py-2 text-xs font-medium transition-colors duration-150 h-9 ${
                           isActive
-                            ? 'bg-gradient-primary text-white shadow-sm font-semibold hover:bg-gradient-primary hover:text-white'
+                            ? 'bg-primary/10 text-primary font-semibold'
                             : 'text-text-secondary hover:text-foreground hover:bg-surface-muted/80'
                         }`}
                       >
                         <div className="flex items-center gap-2.5 min-w-0">
                           <item.icon
                             className={`h-4 w-4 shrink-0 transition-colors ${
-                              isActive ? 'text-white' : 'text-text-secondary group-hover:text-foreground'
+                              isActive ? 'text-primary' : 'text-text-secondary group-hover:text-foreground'
                             }`}
                           />
                           <span className="truncate">{item.title}</span>
@@ -207,9 +207,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 
                         {item.badge && (
                           <span
-                            className={`ml-auto text-[10px] font-medium px-1.5 py-0.5 rounded tracking-tight transition-colors ${
+                            className={`ml-auto text-[11px] font-medium px-1.5 py-0.5 rounded tracking-tight transition-colors ${
                               isActive
-                                ? 'bg-white/20 text-white font-semibold'
+                                ? 'bg-primary/15 text-primary font-semibold'
                                 : item.badgeTone === 'warning'
                                 ? 'bg-warning/10 text-warning border border-warning/20'
                                 : item.badgeTone === 'accent'
@@ -245,7 +245,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               >
                 {/* Avatar with status indicator */}
                 <div className="relative shrink-0">
-                  <div className="h-8 w-8 rounded-full bg-gradient-primary text-white flex items-center justify-center font-bold text-xs shadow-sm">
+                  <div className="h-8 w-8 rounded-full bg-primary text-white flex items-center justify-center font-bold text-xs shadow-sm">
                     SJ
                   </div>
                   <span className="absolute bottom-0 right-0 h-2 w-2 rounded-full bg-success ring-2 ring-surface" />
